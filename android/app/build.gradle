@@ -1,0 +1,82 @@
+plugins {
+    id "com.android.application"
+    id 'com.google.gms.google-services'
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    namespace "com.mooncorporation.rayo"
+    compileSdk 34
+    // flutter에 명시된 ndkVersion이 구버전으로 명시되어있어 차후 내용확인 후 주석 해제
+    // ndkVersion flutter.ndkVersion
+    ndkVersion "27.0.12077973"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        applicationId "com.mooncorporation.rayo"
+        minSdkVersion 28
+        targetSdkVersion 34
+        versionCode keystoreProperties['versionCode'].toInteger()
+        versionName keystoreProperties['versionName']
+    }
+
+    signingConfigs {
+        release {
+            storeFile = file('key.jks')
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
+    buildTypes {
+        release {
+             signingConfig signingConfigs.debug
+//            minifyEnabled false
+//            shrinkResources false
+//            signingConfig signingConfigs.release
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+//    implementation 'com.google.android.gms:play-services-base:18.5.0'
+//    implementation 'com.google.android.gms:play-services-auth:21.3.0'
+//    implementation 'com.google.android.gms:play-services-provider:18.0.0'
+    implementation 'com.google.ar:core:1.48.0'
+    implementation 'com.google.ar.sceneform:core:1.17.1'
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.17.1'
+    implementation 'io.github.webrtc-sdk:android:125.6422.03'
+    implementation 'io.socket:socket.io-client:2.1.1'
+}

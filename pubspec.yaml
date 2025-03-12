@@ -1,0 +1,103 @@
+name: rayo
+description: "A new Flutter project."
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_svg: ^2.0.9
+  auto_size_text: ^3.0.0
+  hive: ^2.2.3 # 컨트롤러에서 사용하는 하이브
+  hive_flutter: ^1.1.0 # 위젯에서 하이브 리슨하기위함
+  permission_handler: ^11.3.1
+  photo_manager: ^3.5.0
+  flutter_webrtc: ^0.12.11
+  shared_preferences: ^2.2.3
+  flutter_email_sender: ^7.0.0
+  pin_code_fields: ^8.0.1
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.3.1
+  firebase_messaging: ^15.1.5
+  cloud_firestore: ^5.6.0
+  provider: ^6.1.2
+  image_cropper: ^9.0.0
+  dotted_border: ^2.1.0
+  scrolls_to_top: ^2.1.1
+  smooth_page_indicator: ^1.1.0
+  socket_io_client: ^3.0.0
+  flutter_launcher_icons: ^0.14.1 # 앱 아이콘 생성기
+  flutter_slidable: ^4.0.0
+  shimmer: ^3.0.0 #skeleton Loading Effect
+  vector_math: ^2.1.4
+  intl: ^0.19.0
+  jwt_decoder: ^2.0.1
+  http: ^1.2.2
+  in_app_purchase: ^3.2.0
+  easy_localization: ^3.0.7
+  easy_rich_text: ^2.2.0
+  package_info_plus: ^8.1.1
+  grouped_list: ^6.0.0
+  
+  flutter_localizations:
+    sdk: flutter
+  
+
+  # 문코퍼레이션 내부 패키지
+  # mooncorp:
+  #   git:
+  #     url: https://github.com/mooncorp-package/flutter.git
+  #     ref: master
+# 앱 아이콘 생성기 정의
+# (아이콘 변경 시 터미널에서 [flutter pub run flutter_launcher_icons:main] 입력 )
+flutter_icons:
+  android: "ic_launcher"
+  
+  ios: true
+  image_path: "assets/rayo_icon.png"
+  adaptive_icon_background: "#FFD400"
+  adaptive_icon_foreground: "assets/rayo_icon.png"
+  adaptive_icon_foreground_inset: 0
+  remove_alpha_ios: true
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/translations/
+  fonts:
+    # From the docs we get this list of constants:
+    # w100 Thin, the least thick
+    # w200 Extra-light
+    # w300 Light
+    # w400 Normal / regular / plain
+    # w500 Medium
+    # w600 Semi-bold
+    # w700 Bold
+    # w800 Extra-bold
+    # w900 Black, the most thick
+    - family: Pretendard
+      fonts:
+        - asset: fonts/Pretendard-Regular.otf
+          weight: 400
+        - asset: fonts/Pretendard-Medium.otf
+          weight: 500
+        - asset: fonts/Pretendard-SemiBold.otf
+          weight: 600
+        - asset: fonts/Pretendard-Bold.otf
+          weight: 700
+        - asset: fonts/Pretendard-ExtraBold.otf
+          weight: 800
+    - family: MCMerchant
+      fonts:
+        - asset: fonts/MCMerchant.otf
