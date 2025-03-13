@@ -19,7 +19,7 @@ class MainActivity: FlutterFragmentActivity() {
             // Flutter코드에서 명시된 호출명 구분
             when (methodCall.method) {
                 "connectWebRTC" -> {
-                    Log.d("MethodChannel", "connectWebRTC")
+                    Log.d("NTLOG", "connectWebRTC")
                     if (methodCall.arguments is Map<*, *>) {
                         val args = methodCall.arguments as Map<String, Any>
                         val roomKey = args["roomKey"] as? Int
@@ -35,31 +35,31 @@ class MainActivity: FlutterFragmentActivity() {
                     }
                 }
                 "disconnectWebRTC" -> {
-                    Log.d("MethodChannel", "disconnectWebRTC")
+                    Log.d("NTLOG", "disconnectWebRTC")
                     webRTCClient.disconnectWebRTC()
                 }
                 "audio" -> {
-                    Log.d("MethodChannel", "audio")
+                    Log.d("NTLOG", "audio")
 //                    webRTCClient?.audioChange()
                 }
                 "video" -> {
-                    Log.d("MethodChannel", "video")
+                    Log.d("NTLOG", "video")
 //                    webRTCClient?.videoChange()
                 }
                 "oppAudioSet" -> {
-                    Log.d("MethodChannel", "oppAudioSet")
+                    Log.d("NTLOG", "oppAudioSet")
 //                    (methodCall.arguments as? Int)?.let {
 //                        webRTCClient?.oppAudioSet(userKey = it)
 //                    }
                 }
                 "oppVideoSet" -> {
-                    Log.d("MethodChannel", "oppVideoSet")
+                    Log.d("NTLOG", "oppVideoSet")
 //                    (methodCall.arguments as? Int)?.let {
 //                        webRTCClient?.oppVideoSet(userKey = it)
 //                    }
                 }
                 "mainCameraDispose" -> {
-                    Log.d("MethodChannel", "mainCameraDispose")
+                    Log.d("NTLOG", "mainCameraDispose")
                     arCameraView.dispose()
                 }
                 else -> result.notImplemented()
@@ -118,7 +118,7 @@ class MainActivity: FlutterFragmentActivity() {
 //            // Flutter코드에서 명시된 호출명 구분
 //            when (methodCall.method) {
 //                "connectWebRTC" -> {
-//                    Log.d("MethodChannel", "connectWebRTC")
+//                    Log.d("NTLOG", "connectWebRTC")
 //                    if (methodCall.arguments is Map<*, *>) {
 //                        val args = methodCall.arguments as Map<String, Any>
 //                        val roomKey = args["roomKey"] as? Int
@@ -134,31 +134,31 @@ class MainActivity: FlutterFragmentActivity() {
 //                    }
 //                }
 //                "disconnectWebRTC" -> {
-//                    Log.d("MethodChannel", "disconnectWebRTC")
+//                    Log.d("NTLOG", "disconnectWebRTC")
 //                    webRTCClient?.disconnectWebRTC()
 //                }
 //                "audio" -> {
-//                    Log.d("MethodChannel", "audio")
+//                    Log.d("NTLOG", "audio")
 //                    webRTCClient?.audioChange()
 //                }
 //                "video" -> {
-//                    Log.d("MethodChannel", "video")
+//                    Log.d("NTLOG", "video")
 //                    webRTCClient?.videoChange()
 //                }
 //                "oppAudioSet" -> {
-//                    Log.d("MethodChannel", "oppAudioSet")
+//                    Log.d("NTLOG", "oppAudioSet")
 //                    (methodCall.arguments as? Int)?.let {
 //                        webRTCClient?.oppAudioSet(userKey = it)
 //                    }
 //                }
 //                "oppVideoSet" -> {
-//                    Log.d("MethodChannel", "oppVideoSet")
+//                    Log.d("NTLOG", "oppVideoSet")
 //                    (methodCall.arguments as? Int)?.let {
 //                        webRTCClient?.oppVideoSet(userKey = it)
 //                    }
 //                }
 //                "mainCameraDispose" -> {
-//                    Log.d("MethodChannel", "mainCameraDispose")
+//                    Log.d("NTLOG", "mainCameraDispose")
 //                    arCameraView?.dispose()
 //                }
 //                else -> result.notImplemented()

@@ -73,7 +73,7 @@ class WebRTCClient(private val context: Context) {
             reconnection = true
         })
         this.socket.on(Socket.EVENT_CONNECT) {
-            Log.d("WebRTCClient", "최초 접속 소켓 발송")
+            Log.d("NTLOG", "최초 접속 소켓 발송")
             val joinInfo = JSONObject().apply {
                 put("roomKey", roomKey)
                 put("userKey", userKey)
@@ -86,7 +86,7 @@ class WebRTCClient(private val context: Context) {
             val userData = data?.getOrNull(0) as? JSONObject ?: return@on
             val userKey = userData.get("userKey") as? Int ?: return@on
             val userName = userData.get("userName") as? String ?: return@on
-            Log.d("WebRTCClient", "User Joined: $userKey, $userName")
+            Log.d("NTLOG", "User Joined: $userKey, $userName")
             if (peerConnections[userKey] == null) {
                 this.userKeyTOname[userKey] = userName
                 this.mysetTrack[userKey] = mutableMapOf(
@@ -99,7 +99,7 @@ class WebRTCClient(private val context: Context) {
             }
         }
         this.socket.on("offer") { data ->
-            Log.d("WebRTCClient", "오퍼 요청받은 경우")
+            Log.d("NTLOG", "오퍼 요청받은 경우")
             val offerData = data?.getOrNull(0) as? JSONObject ?: return@on
             val sdp = offerData["sdp"] as? String ?: return@on
             val userKey = offerData.get("userKey") as? Int ?: return@on
@@ -114,12 +114,12 @@ class WebRTCClient(private val context: Context) {
                 )
                 val remoteDescription = SessionDescription(SessionDescription.Type.OFFER, sdp)
                 this.createAnswer(userKey, remoteDescription)
-                Log.d("WebRTCClient", "답변 완료 잘 된건가")
+                Log.d("NTLOG", "답변 완료 잘 된건가")
             }
         }
 
         this.socket.on("answer") { data ->
-            Log.d("WebRTCClient", "오퍼에 대한 답변 요청의 경우")
+            Log.d("NTLOG", "오퍼에 대한 답변 요청의 경우")
             val answerData = data?.getOrNull(0) as? JSONObject ?: return@on
             val sdp = answerData["sdp"] as? String ?: return@on
             val userKey = answerData["userKey"] as? Int ?: return@on
@@ -134,7 +134,7 @@ class WebRTCClient(private val context: Context) {
 
         }
         this.socket.on("ice") { data ->
-            Log.d("WebRTCClient", "아이스 교환")
+            Log.d("NTLOG", "아이스 교환")
             val iceData = data?.getOrNull(0) as? JSONObject ?: return@on
             val candidate = iceData["candidate"] as? String ?: return@on
             val sdpMid = iceData["sdpMid"] as? String ?: return@on
@@ -153,7 +153,7 @@ class WebRTCClient(private val context: Context) {
             val userKey = data?.getOrNull(0) as? Int ?: return@on
 
             if (this.peerConnections[userKey] != null) {
-                Log.d("WebRTCClient", "$userKey 유저 나감")
+                Log.d("NTLOG", "$userKey 유저 나감")
                 GlobalScope.launch(Dispatchers.Main) {
                     methodChannel?.invokeMethod("exitUser", userKey)
                 }
@@ -172,7 +172,7 @@ class WebRTCClient(private val context: Context) {
     }
 
     private fun createOffer(userKey: Int) {
-        Log.d("WebRTCClient", "오퍼 요청? 오퍼발송")
+        Log.d("NTLOG", "오퍼 요청? 오퍼발송")
         this.peerConnections[userKey] = createPeerConnection(userKey)!!
         val mandatory = MediaConstraints().apply {
             mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveAudio", "true"))
@@ -222,7 +222,7 @@ class WebRTCClient(private val context: Context) {
 
 
     fun createPeerConnection(userKey: Int): PeerConnection? {
-        Log.d("WebRTCClient", "인코더 디코더 생성건")
+        Log.d("NTLOG", "인코더 디코더 생성건")
         // 인코더, 디코더 생성
         encoderFactory = DefaultVideoEncoderFactory(
             EglBase.create().eglBaseContext, /* enableIntelVp8Encoder */
@@ -230,7 +230,7 @@ class WebRTCClient(private val context: Context) {
             true
         )
         decoderFactory = DefaultVideoDecoderFactory(EglBase.create().eglBaseContext)
-        Log.d("WebRTCClient", "인코더 디코더 생성1")
+        Log.d("NTLOG", "인코더 디코더 생성1")
 
         // 인코더, 디코더를 사용해 PeerConnectionFactory 생성
         val factory = PeerConnectionFactory.builder()
@@ -245,7 +245,7 @@ class WebRTCClient(private val context: Context) {
 //        val iceServers = listOf(
 //            PeerConnection.IceServer.builder("stun:stun.l.google.com:19302").createIceServer()
 //        )
-        Log.d("WebRTCClient", "인코더 디코더 생성2")
+        Log.d("NTLOG", "인코더 디코더 생성2")
 //        val constraints = MediaConstraints().apply {
 //            optional.add(MediaConstraints.KeyValuePair("DtlsSrtpKeyAgreement", "true"))
 //        }
@@ -292,23 +292,23 @@ class WebRTCClient(private val context: Context) {
     private fun createPeerConnectionObserver(userKey: Int): PeerConnection.Observer {
         return object : PeerConnection.Observer {
             override fun onSignalingChange(signalingState: PeerConnection.SignalingState) {
-                Log.d("WebRTCClient", "Signaling state changed: $signalingState")
+                Log.d("NTLOG", "Signaling state changed: $signalingState")
             }
 
             override fun onIceConnectionChange(iceConnectionState: PeerConnection.IceConnectionState) {
-                Log.d("WebRTCClient", "ICE connection state changed: $iceConnectionState")
+                Log.d("NTLOG", "ICE connection state changed: $iceConnectionState")
             }
 
             override fun onIceConnectionReceivingChange(receiving: Boolean) {
-                Log.d("WebRTCClient", "ICE connection receiving change: $receiving")
+                Log.d("NTLOG", "ICE connection receiving change: $receiving")
             }
 
             override fun onIceGatheringChange(iceGatheringState: PeerConnection.IceGatheringState) {
-                Log.d("WebRTCClient", "ICE gathering state changed: $iceGatheringState")
+                Log.d("NTLOG", "ICE gathering state changed: $iceGatheringState")
             }
 
             override fun onIceCandidate(candidate: IceCandidate) {
-                Log.d("WebRTCClient", "New ICE candidate: $candidate")
+                Log.d("NTLOG", "New ICE candidate: $candidate")
                 val candidateData = JSONObject().apply {
                     put("candidate", candidate.sdp)
                     put("sdpMid", candidate.sdpMid)
@@ -319,11 +319,11 @@ class WebRTCClient(private val context: Context) {
             }
 
             override fun onIceCandidatesRemoved(candidates: Array<IceCandidate>) {
-                Log.d("WebRTCClient", "ICE candidates removed: ${candidates.joinToString()}")
+                Log.d("NTLOG", "ICE candidates removed: ${candidates.joinToString()}")
             }
 
             override fun onAddStream(stream: MediaStream) {
-                Log.d("WebRTCClient", "Stream added: $stream")
+                Log.d("NTLOG", "Stream added: $stream")
                 remoteStream[userKey] = stream.videoTracks.first()
                 val userData = mapOf(
                     "userKey" to userKey,
@@ -335,19 +335,19 @@ class WebRTCClient(private val context: Context) {
             }
 
             override fun onRemoveStream(stream: MediaStream) {
-                Log.d("WebRTCClient", "Stream removed: $stream")
+                Log.d("NTLOG", "Stream removed: $stream")
             }
 
             override fun onDataChannel(dataChannel: DataChannel) {
-                Log.d("WebRTCClient", "Data channel: $dataChannel")
+                Log.d("NTLOG", "Data channel: $dataChannel")
             }
 
             override fun onRenegotiationNeeded() {
-                Log.d("WebRTCClient", "Renegotiation needed")
+                Log.d("NTLOG", "Renegotiation needed")
             }
 
             override fun onAddTrack(receiver: RtpReceiver, streams: Array<MediaStream>) {
-                Log.d("WebRTCClient", "Track added: $receiver")
+                Log.d("NTLOG", "Track added: $receiver")
             }
         }
     }

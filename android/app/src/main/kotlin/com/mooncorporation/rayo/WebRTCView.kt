@@ -1,6 +1,7 @@
 package com.mooncorporation.rayo
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import io.flutter.plugin.common.StandardMessageCodec
@@ -8,6 +9,8 @@ import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import org.webrtc.EglBase
 import org.webrtc.SurfaceViewRenderer
+import org.webrtc.VideoFrame
+import org.webrtc.VideoSink
 
 class WebRTCViewFactory(
     private val webRTCClient: WebRTCClient
@@ -44,9 +47,21 @@ class WebRTCView(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.MATCH_PARENT
         )
-        val aaa =webRTCClient.localStream
-        webRTCClient.localStream?.videoTracks?.firstOrNull()?.addSink(videoView)
+        Log.d("WebRTCView", "Initializing local video view")
+        val localVideoTrack = webRTCClient.localStream?.videoTracks?.firstOrNull()
+        if (localVideoTrack != null) {
+            val videoSink = object : VideoSink {
+                override fun onFrame(frame: VideoFrame) {
+                    Log.d("WebRTCView", "Received video frame: ${frame.rotatedWidth}x${frame.rotatedHeight}")
+                    videoView.onFrame(frame)
+                }
+            }
+            localVideoTrack.addSink(videoSink)
+        } else {
+            Log.e("WebRTCView", "Local video track not found")
+        }
         containerView.addView(videoView)
+
     }
 
     private fun setupRemoteVideoView(userKey: Int) {
