@@ -379,14 +379,23 @@ class _HomePage extends State<HomePage> {
                                     child: Text('chat DB delete')),
                               ),
                               Container(
-                                width: 200,
-                                height: 350,
-                                child: AndroidView(
-                                  viewType: 'WebRTCViewMe',
-                                  creationParams: LoginCtl.instance.user.seq,
-                                  creationParamsCodec: StandardMessageCodec(),
-                                ),
-                              )
+                                  width: 200,
+                                  height: 350,
+                                  child: Platform.isAndroid
+                                      ? AndroidView(
+                                          viewType: 'WebRTCViewMe',
+                                          creationParams:
+                                              LoginCtl.instance.user.seq,
+                                          creationParamsCodec:
+                                              StandardMessageCodec(),
+                                        )
+                                      : UiKitView(
+                                          viewType: 'WebRTCViewMe',
+                                          creationParams:
+                                              LoginCtl.instance.user.seq,
+                                          creationParamsCodec:
+                                              StandardMessageCodec(),
+                                        ))
                             ]),
                       ),
                       Container(
