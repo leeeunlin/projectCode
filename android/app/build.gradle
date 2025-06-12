@@ -20,7 +20,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.mooncorporation.rayo"
+    namespace "com.soso.rayo"
     compileSdk 34
     // flutter에 명시된 ndkVersion이 구버전으로 명시되어있어 차후 내용확인 후 주석 해제
     // ndkVersion flutter.ndkVersion
@@ -40,7 +40,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.mooncorporation.rayo"
+        applicationId "com.soso.rayo"
         minSdkVersion 28
         targetSdkVersion 34
         versionCode keystoreProperties['versionCode'].toInteger()

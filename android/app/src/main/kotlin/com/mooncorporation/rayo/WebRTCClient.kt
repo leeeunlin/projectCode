@@ -1,4 +1,4 @@
-package com.mooncorporation.rayo
+package com.soso.rayo
 
 
 import android.content.Context

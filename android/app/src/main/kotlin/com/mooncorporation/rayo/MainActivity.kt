@@ -1,4 +1,4 @@
-package com.mooncorporation.rayo
+package com.soso.rayo
 
 import android.util.Log
 import io.flutter.embedding.android.FlutterFragmentActivity
@@ -84,7 +84,7 @@ class MainActivity: FlutterFragmentActivity() {
 }
 
 
-//package com.mooncorporation.rayo
+//package com.soso.rayo
 //
 //import android.util.Log
 //import com.google.ar.core.ArCoreApk
