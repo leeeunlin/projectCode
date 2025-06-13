@@ -5,7 +5,6 @@ export 'package:rayo/color/color_palette.dart';
 export 'package:rayo/utils/key_nav.dart';
 export 'package:rayo/utils/nav_routing.dart';
 export 'package:firebase_core/firebase_core.dart';
-export 'package:rayo/firebase_options.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:rayo/controller/login_ctl.dart';

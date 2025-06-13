@@ -12,9 +12,6 @@ Future<void> forceAppUpdate() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   await HiveDB.instance.init();
   EasyLocalization.logger.enableBuildModes = [];
   await EasyLocalization.ensureInitialized();
